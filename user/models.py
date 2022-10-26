@@ -10,7 +10,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     frist_name = models.CharField(_('first name'), max_length=100)
     last_name = models.CharField(_('last name'), max_length=100)
     email = models.EmailField(_('email'), blank=True, null=True)
-    city = models.CharField(_('city'), max_length=100)
+    user_province = models.CharField(_('province'), max_length=100)
+    user_city = models.CharField(_('city'), max_length=100)
     birthday = models.DateField(_('birthday'), blank=True, null=True)
     otp_password = models.CharField(_('otp password'), max_length=6, blank=True, null=True)
     otp_time_created = models.DateTimeField(_('otp created time'), auto_now_add=True)
@@ -21,6 +22,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active_customer = models.BooleanField(_('is active customer'), default=True)
     is_expert = models.BooleanField(_('is expert'), default=False)
     wallet_balance = models.IntegerField(_('wallet balance'), default=0)
+    user_lat = models.DecimalField(_('user lat'), max_digits=9, decimal_places=6)
+    user_long = models.DecimalField(_('user long'), max_digits=9, decimal_places=6)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 

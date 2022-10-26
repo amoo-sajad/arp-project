@@ -16,7 +16,7 @@ class Service(models.Model):
 class Skill(models.Model):
     title = models.CharField(_('title'), max_length=100)
     caption = models.TextField(_('caption'), blank=True, null=True)
-    service = models.ForeignKey(Service, related_name='skill', on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, related_name='skills', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
