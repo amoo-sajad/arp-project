@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'expert.apps.ExpertConfig',
     'service.apps.ServiceConfig',
+
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
