@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Expert
 
-# Register your models here.
+
+@admin.register(Expert)
+class ExpertAdmin(admin.ModelAdmin):
+    display_fields = ('user', 'father_name', 'gender', 'skills')

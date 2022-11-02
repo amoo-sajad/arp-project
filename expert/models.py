@@ -12,11 +12,8 @@ class Expert(models.Model):
     expert_province = models.CharField(_('expert province'), max_length=100)
     expert_city = models.CharField(_('expert city'), max_length=100)
     ready_to_serve = models.BooleanField(_('ready to serve'), default=False)
-    ready_to_serve_expire_time = models.DateTimeField(
-        _('ready to serve expire time'), default=datetime.now() + timedelta(weeks=4)
-        )
     father_name = models.CharField(_('father name'), max_length=26)
-    shaba_numer = models.CharField(_('shaba number'), max_length=24)
+    shaba_number = models.CharField(_('shaba number'), max_length=24)
     MALE = 1
     FEMALE = 2
     GENDER_CHOICE = [
