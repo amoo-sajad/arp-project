@@ -12,7 +12,7 @@
     "user_lat": null,
     "user_long": null,
     "password": ""
-}
+  }
 
 ## /signin/:
   post:
