@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import Service, Skill
 
-# Register your models here.
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    display_fields = ['title']
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    display_fields = ['title', 'caption', 'service']
