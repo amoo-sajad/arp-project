@@ -26,6 +26,8 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             )
         user.email = validated_data['email']
+        user.user_lat = validated_data['user_lat']
+        user.user_long = validated_data['user_long']
         user.save()
         
         return user

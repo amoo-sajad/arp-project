@@ -19,8 +19,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_expert = models.BooleanField(_('is expert'), default=False)
     is_staff = models.BooleanField(_('is staff'), default=False)
     wallet_balance = models.IntegerField(_('wallet balance'), default=0)
-    user_lat = models.DecimalField(_('user lat'), max_digits=9, decimal_places=6)
-    user_long = models.DecimalField(_('user long'), max_digits=9, decimal_places=6)
+    user_lat = models.DecimalField(_('user lat'), max_digits=9, decimal_places=6, null=True, blank=True)
+    user_long = models.DecimalField(_('user long'), max_digits=9, decimal_places=6, null=True, blank=True)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 

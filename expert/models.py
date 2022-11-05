@@ -8,19 +8,18 @@ User = get_user_model()
 
 class Expert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_active_expert = models.BooleanField(_('is active expert'), default=False)
-    expert_province = models.CharField(_('expert province'), max_length=100)
-    expert_city = models.CharField(_('expert city'), max_length=100)
-    ready_to_serve = models.BooleanField(_('ready to serve'), default=False)
+    national_code = models.CharField(_('national code'), max_length=10)
     father_name = models.CharField(_('father name'), max_length=26)
     shaba_number = models.CharField(_('shaba number'), max_length=24)
+    expert_province = models.CharField(_('expert province'), max_length=100)
+    expert_city = models.CharField(_('expert city'), max_length=100)
     MALE = 1
     FEMALE = 2
     GENDER_CHOICE = [
         (MALE, 'MALE'),
         (FEMALE, 'FEMALE')
     ]
-    gender = models.IntegerField(_('gender'), choices=GENDER_CHOICE)
+    gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICE)
     WOMEN = 1
     DONE = 2
     EXEMPT = 3
@@ -31,19 +30,21 @@ class Expert(models.Model):
         (EXEMPT, 'EXEMPT'),
         (SUBJECT, 'SUBJECT')
     ]
-    military_service = models.IntegerField(_('military service'), choices=MILITARY_SERVICE_CHOICES)
+    military_service = models.PositiveSmallIntegerField(
+        _('military service'), choices=MILITARY_SERVICE_CHOICES
+        )
     SINGLE = 1
     MARRIED = 2
     MARRIED_CHOICES = [
         (SINGLE, 'SINGLE'),
         (MARRIED, 'MARRIED')
     ]
-    married_status = models.IntegerField(_('married status'), choices=MARRIED_CHOICES)
+    married_status = models.PositiveSmallIntegerField(_('married status'), choices=MARRIED_CHOICES)
+    is_active_expert = models.BooleanField(_('is active expert'), default=False)
+    is_active_expert_expire_time = models.DateTimeField(_('is active expire time'),blank=True, null=True)
     expert_lat = models.DecimalField(_('expert lat'), max_digits=9, decimal_places=6)
     expert_long = models.DecimalField(_('expert long'), max_digits=9, decimal_places=6)
     skills = models.ManyToManyField(Skill, related_name='experts', through='Skillship')
-    total_profit = models.IntegerField(_('total profit'), default=0)
-    expert_balance = models.IntegerField(_('expert balance'), default=0)
     count_complete_services = models.PositiveIntegerField(_('count complete services'), default=0)
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_('updated at'), auto_now=True)
