@@ -40,7 +40,6 @@ class Expert(models.Model):
         (MARRIED, 'MARRIED')
     ]
     married_status = models.PositiveSmallIntegerField(_('married status'), choices=MARRIED_CHOICES)
-    is_active_expert = models.BooleanField(_('is active expert'), default=False)
     is_active_expert_expire_time = models.DateTimeField(_('is active expire time'),blank=True, null=True)
     expert_lat = models.DecimalField(_('expert lat'), max_digits=9, decimal_places=6)
     expert_long = models.DecimalField(_('expert long'), max_digits=9, decimal_places=6)
