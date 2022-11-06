@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
 from django.utils.translation import gettext_lazy as _
 from service.models import Skill
+import datetime
 
 User = get_user_model()
 
@@ -57,12 +58,10 @@ class Expert(models.Model):
     def skills_list(self):
         pass
 
-    def withdraw(self, amount):
-        if self.expert_balance < amount:
-            return False
-        else:
-            self.expert_balance = self.expert_balance - amount
-            return True
+    @property
+    def is_active(self):
+        now = datetime.datetime.now()
+        return self.is_active_expert_expire_time > now
 
     class Meta:
         verbose_name = _('expert')
