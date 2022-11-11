@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from datetime import datetime, timedelta
+from django.utils import timezone
+from datetime import datetime
 from django.utils.translation import gettext_lazy as _
 from service.models import Skill
-import datetime
 
 User = get_user_model()
+
 
 class Expert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -41,7 +42,7 @@ class Expert(models.Model):
         (MARRIED, 'MARRIED')
     ]
     married_status = models.PositiveSmallIntegerField(_('married status'), choices=MARRIED_CHOICES)
-    is_active_expert_expire_time = models.DateTimeField(_('is active expire time'),blank=True, null=True)
+    is_active_expert_expire_time = models.DateTimeField(_('is active expire time'), default=timezone.now)
     expert_lat = models.DecimalField(_('expert lat'), max_digits=9, decimal_places=6)
     expert_long = models.DecimalField(_('expert long'), max_digits=9, decimal_places=6)
     skills = models.ManyToManyField(Skill, related_name='experts', through='Skillship')
@@ -60,7 +61,7 @@ class Expert(models.Model):
 
     @property
     def is_active(self):
-        now = datetime.datetime.now()
+        now = timezone.now()
         return self.is_active_expert_expire_time > now
 
     class Meta:
