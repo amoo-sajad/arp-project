@@ -4,9 +4,9 @@ from .models import Service, Skill
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    display_fields = ['title']
+    list_display = ['title']
 
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    display_fields = ['title', 'caption', 'service']
+    list_display = ['title', 'caption', 'service']

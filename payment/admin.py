@@ -4,9 +4,13 @@ from .models import PaymentPlan, Payment
 
 @admin.register(PaymentPlan)
 class PaymentPlanAdmin(admin.ModelAdmin):
-    display_fields = ['title', 'price']
+    list_display = ['title', 'price']
 
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    display_fields = ['expert', 'amount', 'ref_id', 'paid_at']
+    list_display = ['expert', 'get_price', 'ref_id', 'paid_at']
+
+    @admin.display(ordering='payment_plan__price', description='price')
+    def get_price(self, obj):
+        return obj.payment_plan.price
