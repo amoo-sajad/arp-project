@@ -1,9 +1,12 @@
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import generics
 from expert.models import Expert
 from .models import Payment, PaymentPlan
+from .serializers import PaymentSerializer, PaymentPlanSerializer
+from .permissions import IsAdminOrReadOnly
 import requests
 
 
@@ -84,3 +87,31 @@ class PaymentDetailAPIView(APIView):
         else:
             payment.delete()
             return Response({'Status': 'transaction canceled by user or failed'})
+
+
+class PaymentListAPIView(generics.ListAPIView):
+    serializer_class = PaymentSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = Payment.objects.all()
+
+
+class PaymentPlanListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = PaymentPlanSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = PaymentPlan.objects.all()
+
+
+class PaymentPlanDestroyAPIView(generics.DestroyAPIView):
+    serializer_class = PaymentPlanSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = PaymentPlan.objects.all()
+
+    def get_object(self):
+        payment_plan = self.request.GET.get('payment_plan', '')
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, title=payment_plan)
+        self.check_object_permissions(self.request, obj)
+        return obj
