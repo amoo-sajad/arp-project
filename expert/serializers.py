@@ -2,14 +2,24 @@ from rest_framework import serializers
 from .models import Expert, Skillship
 
 
+class ExpertSignupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Expert
+        fields = [
+            'user','father_name', 'national_code', 'expert_province', 'expert_city',
+            'gender', 'military_service', 'married_status', 'expert_lat', 'expert_long'
+        ]
+        read_only_fields = ['user']
+
+
 class ExpertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expert
         fields = [
-            'user','father_name', 'national_code', 'expert_province', 'expert_city', 'shaba_number',
-            'gender', 'military_service', 'married_status', 'expert_lat', 'expert_long'
+            'user','father_name', 'national_code', 'expert_province', 'expert_city',
+            'gender', 'military_service', 'married_status', 'expert_lat', 'expert_long',
+            'skills', 'count_complete_services', 'created_at'
         ]
-        read_only_fields = ['user']
 
 
 class SkillshipSerializer(serializers.ModelSerializer):

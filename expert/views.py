@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import ExpertSerializer, SkillshipSerializer
+from .serializers import ExpertSignupSerializer, SkillshipSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Expert, Skillship
@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class ExpertSignUpAPIView(generics.CreateAPIView):
-    serializer_class = ExpertSerializer
+    serializer_class = ExpertSignupSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     queryset = Expert.objects.all()

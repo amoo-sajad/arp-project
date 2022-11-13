@@ -12,7 +12,6 @@ class Expert(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     national_code = models.CharField(_('national code'), max_length=10)
     father_name = models.CharField(_('father name'), max_length=26)
-    shaba_number = models.CharField(_('shaba number'), max_length=24)
     expert_province = models.CharField(_('expert province'), max_length=100)
     expert_city = models.CharField(_('expert city'), max_length=100)
     MALE = 1
