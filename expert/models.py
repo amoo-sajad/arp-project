@@ -72,10 +72,5 @@ class Expert(models.Model):
 class Skillship(models.Model):
     expert = models.ForeignKey(Expert, on_delete=models.CASCADE)
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    years_of_experience = models.PositiveSmallIntegerField(
-        _('years of experience'), blank=True, null=True
-        )
-    image_of_evidence = models.ImageField(
-        _('image of eviddence'), upload_to='evidences', blank=True, null=True
-        )
+    image_of_evidence = models.ImageField(_('image of eviddence'), upload_to='evidences')
     description = models.TextField(_('description'))
