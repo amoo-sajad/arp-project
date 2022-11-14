@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from expert.serializers import ExpertSerializer
 
 User = get_user_model()
 
@@ -38,11 +39,11 @@ class UserListSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
+    expert = ExpertSerializer()
 
     class Meta:
         model = User
         field = ['phone_number', 'first_name', 'last_name', 'email', 'user_province', 'user_city',
             'birthday', 'count_receive_services', 'is_active_customer', 'is_expert', 'user_lat', 
-            'user_long', 'created_at'
+            'user_long', 'created_at', 'expert'
             ]
-
