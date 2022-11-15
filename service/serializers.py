@@ -5,10 +5,12 @@ from .models import Service, Skill
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = ['title']
+        fields = ['id', 'title']
+        read_only_fields = ['id']
 
 
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ['title', 'caption', 'service']
+        fields = ['id', 'title', 'caption', 'service']
+        read_only_fields = ['id']

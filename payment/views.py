@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,7 +6,6 @@ from rest_framework import generics
 from expert.models import Expert
 from .models import Payment, PaymentPlan
 from .serializers import PaymentSerializer, PaymentPlanSerializer
-from .permissions import IsAdminOrReadOnly
 import requests
 
 
@@ -72,7 +71,7 @@ class PaymentDetailAPIView(APIView):
     def get(self, request):
         authority = request.GET.get('Authority', '')
         status = request.GET.get('Status', '')
-        payment = Payment.objects.filter(authority=authority).first()
+        payment = Payment.objects.get(authority=authority)
 
         if status == 'OK' and payment:
             response = verify_payment(authority=authority, amount=payment.get_amount())
@@ -96,22 +95,23 @@ class PaymentListAPIView(generics.ListAPIView):
     queryset = Payment.objects.all()
 
 
-class PaymentPlanListCreateAPIView(generics.ListCreateAPIView):
+class PaymentPlanListAPIView(generics.ListCreateAPIView):
     serializer_class = PaymentPlanSerializer
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [AllowAny]
     queryset = PaymentPlan.objects.all()
 
 
-class PaymentPlanDestroyAPIView(generics.DestroyAPIView):
+class PaymentPlanCreateAPIView(generics.ListCreateAPIView):
     serializer_class = PaymentPlanSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
     queryset = PaymentPlan.objects.all()
 
-    def get_object(self):
-        payment_plan = self.request.GET.get('payment_plan', '')
-        queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, title=payment_plan)
-        self.check_object_permissions(self.request, obj)
-        return obj
+
+class PaymentPlanDestroyAPIView(generics.DestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminUser]
+    queryset = PaymentPlan.objects.all()
+    lookup_field = 'id'
+    lookup_url_kwarg = 'id'

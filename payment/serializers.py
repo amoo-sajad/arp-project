@@ -11,4 +11,5 @@ class PaymentSerializer(serializers.ModelSerializer):
 class PaymentPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentPlan
-        fields = ['title', 'price']
+        fields = ['id', 'title', 'months', 'price']
+        read_only_fields = ['id']

@@ -3,6 +3,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAdminUser, AllowAny
 from .models import Service, Skill
 from .serializers import ServiceSerializer, SkillSerializer
+from django.shortcuts import get_object_or_404
 
 
 class ServiceCreateAPIView(generics.CreateAPIView):
@@ -33,7 +34,9 @@ class SkillListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         service = self.request.GET.get('service', '')
-        return Skill.objects.filter(service=service)
+        if service:
+            return Skill.objects.filter(service=service)
+        return Skill.objects.all()
 
 
 class ServiceDestroyAPIView(generics.DestroyAPIView):
@@ -41,13 +44,8 @@ class ServiceDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [IsAdminUser]
     authentication_classes = [JWTAuthentication]
     queryset = Service.objects.all()
-
-    def get_object(self):
-        service = self.request.GET.get('service', '')
-        queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, title=service)
-        self.check_object_permissions(self.request, obj)
-        return obj
+    lookup_field = 'id'
+    lookup_url_kwarg = 'id'
 
 
 class SkillDestroyAPIView(generics.DestroyAPIView):
@@ -55,10 +53,6 @@ class SkillDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [IsAdminUser]
     authentication_classes = [JWTAuthentication]
     queryset = Skill.objects.all()
-
-    def get_object(self):
-        skill = self.request.GET.get('skill', '')
-        queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, title=skill)
-        self.check_object_permissions(self.request, obj)
-        return obj
+    lookup_field = 'id'
+    lookup_url_kwarg = 'id'
+ 
