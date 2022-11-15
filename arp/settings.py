@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'expert.apps.ExpertConfig',
     'service.apps.ServiceConfig',
     'payment.apps.PaymentConfig',
-
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
