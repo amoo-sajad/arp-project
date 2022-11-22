@@ -4,6 +4,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'first_name', 'last_name', 'user_city')
+# @admin.register(User)
+# class UserAdmin(admin.ModelAdmin):
+#     list_display = ('phone_number', 'first_name', 'last_name', 'user_city')

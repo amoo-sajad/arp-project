@@ -6,25 +6,33 @@ from django.utils import timezone
 
 
 class PaymentPlan(models.Model):
-    title = models.CharField(_('title'), max_length=100, unique=True)
-    months = models.PositiveSmallIntegerField(_('months'))
-    price = models.IntegerField(_('price'))
+    title = models.CharField(_('عنوان'), max_length=100, unique=True)
+    months = models.PositiveSmallIntegerField(_('ماه ها'))
+    price = models.IntegerField(_('قیمت'))
 
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'اشتراک'
+        verbose_name_plural = 'اشتراک ها'
+
 
 class Payment(models.Model):
-    expert = models.ForeignKey(Expert, on_delete=models.CASCADE, related_name='payments')
+    expert = models.ForeignKey(
+        Expert, verbose_name='متخصص', on_delete=models.CASCADE, related_name='payments'
+        )
     authority = models.CharField(_('authority'), max_length=200, unique=True)
-    payment_plan = models.ForeignKey(PaymentPlan, on_delete=models.CASCADE, related_name='payments')
+    payment_plan = models.ForeignKey(
+        PaymentPlan, verbose_name='اشتراک', on_delete=models.CASCADE, related_name='payments'
+        )
     code = models.IntegerField(_('code'), null=True, blank=True)
     ref_id = models.IntegerField(_('ref id'), null=True, blank=True)
     card_span = models.CharField(_('card span'), max_length=100, null=True, blank=True)
     card_hash = models.CharField(_('card hash'), max_length=200, null=True, blank=True)
     fee_type = models.CharField(_('fee type'), max_length=100, null=True, blank=True)
     fee = models.IntegerField(_('fee'), null=True, blank=True)
-    charged = models.BooleanField(_('charged'), default=False)
+    charged = models.BooleanField(_('شارژ شده'), default=False)
     paid_at = models.DateTimeField(_('paid at'), auto_now_add=True)
 
     def __str__(self):
@@ -43,3 +51,7 @@ class Payment(models.Model):
         self.charged = True
         self.save()
         expert.save()
+
+    class Meta:
+        verbose_name = 'پرداخت'
+        verbose_name_plural = 'پرداخت ها'

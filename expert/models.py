@@ -9,18 +9,18 @@ User = get_user_model()
 
 
 class Expert(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    national_code = models.CharField(_('national code'), max_length=10)
-    father_name = models.CharField(_('father name'), max_length=26)
-    expert_province = models.CharField(_('expert province'), max_length=100)
-    expert_city = models.CharField(_('expert city'), max_length=100)
+    user = models.OneToOneField(User, verbose_name='کاربر', on_delete=models.CASCADE)
+    national_code = models.CharField(_('کد ملی'), max_length=10)
+    father_name = models.CharField(_('نام پدر'), max_length=26)
+    expert_province = models.CharField(_('استان'), max_length=100)
+    expert_city = models.CharField(_('شهر'), max_length=100)
     MALE = 1
     FEMALE = 2
     GENDER_CHOICE = [
         (MALE, 'MALE'),
         (FEMALE, 'FEMALE')
     ]
-    gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICE)
+    gender = models.PositiveSmallIntegerField(_('جنسیت'), choices=GENDER_CHOICE)
     WOMEN = 1
     DONE = 2
     EXEMPT = 3
@@ -32,7 +32,7 @@ class Expert(models.Model):
         (SUBJECT, 'SUBJECT')
     ]
     military_service = models.PositiveSmallIntegerField(
-        _('military service'), choices=MILITARY_SERVICE_CHOICES
+        _('سربازی'), choices=MILITARY_SERVICE_CHOICES
         )
     SINGLE = 1
     MARRIED = 2
@@ -40,14 +40,15 @@ class Expert(models.Model):
         (SINGLE, 'SINGLE'),
         (MARRIED, 'MARRIED')
     ]
-    married_status = models.PositiveSmallIntegerField(_('married status'), choices=MARRIED_CHOICES)
-    is_active_expert_expire_time = models.DateTimeField(_('is active expire time'), default=timezone.now)
+    married_status = models.PositiveSmallIntegerField(_('وضعیت تاهل'), choices=MARRIED_CHOICES)
+    is_active_expert_expire_time = models.DateTimeField(_('تاریخ غیرفعال شدن اکانت'), default=timezone.now)
     expert_lat = models.DecimalField(_('expert lat'), max_digits=9, decimal_places=6)
     expert_long = models.DecimalField(_('expert long'), max_digits=9, decimal_places=6)
-    skills = models.ManyToManyField(Skill, related_name='experts', through='Skillship')
-    count_complete_services = models.PositiveIntegerField(_('count complete services'), default=0)
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
-    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
+    skills = models.ManyToManyField(
+        Skill, verbose_name='مهارت ها', related_name='experts', through='Skillship'
+        )
+    created_at = models.DateTimeField(_('created_at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated_at'), auto_now=True)
 
     def __str__(self):
         return self.user.get_full_name()
@@ -64,12 +65,17 @@ class Expert(models.Model):
         return self.is_active_expert_expire_time > now
 
     class Meta:
-        verbose_name = _('expert')
-        verbose_name_plural = _('experts')
+        verbose_name = _('متخصص')
+        verbose_name_plural = _('متخصصان')
 
 
 class Skillship(models.Model):
-    expert = models.ForeignKey(Expert, on_delete=models.CASCADE)
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    image_of_evidence = models.ImageField(_('image of eviddence'), upload_to='evidences')
-    description = models.TextField(_('description'))
+    expert = models.ForeignKey(Expert, verbose_name='متخصص', on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, verbose_name='مهارت', on_delete=models.CASCADE)
+    image_of_evidence = models.ImageField(_('تصویر مدرک'), upload_to='evidences')
+    description = models.TextField(_('توضیحات'))
+
+    class Meta:
+        verbose_name = _('تخصص')
+        verbose_name_plural = _('تخصص ها')
+
