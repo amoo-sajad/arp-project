@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import AllowAny, IsAdminUser
-from .serializers import UserSignUpSerializer, UserListSerializer, UserSerializer
+from rest_framework.permissions import AllowAny
+from .serializers import UserSignUpSerializer, UserSerializer
 from .permissions import IsOwnerOrAdmin
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
@@ -27,13 +27,6 @@ class SignUpAPIView(generics.CreateAPIView):
             'phone_number': user.phone_number, 
             'access': str(refresh.access_token), 
             'refresh': str(refresh)})
-
-
-class ListUserAPIVew(generics.ListAPIView):
-    queryset = User.objects.all()
-    permission_classes = [IsAdminUser]
-    authentication_classes = [JWTAuthentication]
-    serializer_class = UserListSerializer
 
 
 class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):

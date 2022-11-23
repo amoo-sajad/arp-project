@@ -31,11 +31,6 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         
         return user
 
-class UserListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['phone_number', 'first_name', 'last_name', 'email', 'user_province', 'user_city']
-
 
 class UserSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)

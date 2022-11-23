@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -88,30 +88,9 @@ class PaymentDetailAPIView(APIView):
             return Response({'Status': 'transaction canceled by user or failed'})
 
 
-class PaymentListAPIView(generics.ListAPIView):
-    serializer_class = PaymentSerializer
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminUser]
-    queryset = Payment.objects.all()
-
-
 class PaymentPlanListAPIView(generics.ListCreateAPIView):
     serializer_class = PaymentPlanSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [AllowAny]
     queryset = PaymentPlan.objects.all()
 
-
-class PaymentPlanCreateAPIView(generics.ListCreateAPIView):
-    serializer_class = PaymentPlanSerializer
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminUser]
-    queryset = PaymentPlan.objects.all()
-
-
-class PaymentPlanDestroyAPIView(generics.DestroyAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAdminUser]
-    queryset = PaymentPlan.objects.all()
-    lookup_field = 'id'
-    lookup_url_kwarg = 'id'
