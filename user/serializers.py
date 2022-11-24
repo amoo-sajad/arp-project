@@ -39,6 +39,5 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['phone_number', 'first_name', 'last_name', 'email', 'user_province', 'user_city',
-            'birthday', 'count_receive_services', 'is_active_customer', 'is_expert', 'user_lat', 
-            'user_long', 'created_at', 'expert'
+            'birthday', 'is_expert', 'user_lat', 'user_long', 'created_at', 'expert'
             ]

@@ -88,7 +88,7 @@ class PaymentDetailAPIView(APIView):
             return Response({'Status': 'transaction canceled by user or failed'})
 
 
-class PaymentPlanListAPIView(generics.ListCreateAPIView):
+class PaymentPlanListAPIView(generics.ListAPIView):
     serializer_class = PaymentPlanSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [AllowAny]

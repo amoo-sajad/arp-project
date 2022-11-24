@@ -18,7 +18,7 @@ class ExpertSerializer(serializers.ModelSerializer):
         fields = [
             'user','father_name', 'national_code', 'expert_province', 'expert_city',
             'gender', 'military_service', 'married_status', 'expert_lat', 'expert_long',
-            'skills', 'count_complete_services', 'created_at'
+            'skills', 'created_at'
         ]
 
 
