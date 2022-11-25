@@ -8,7 +8,7 @@ from django.utils import timezone
 class PaymentPlan(models.Model):
     title = models.CharField(_('عنوان'), max_length=100, unique=True)
     months = models.PositiveSmallIntegerField(_('ماه ها'))
-    price = models.IntegerField(_('قیمت'))
+    price = models.BigIntegerField(_('قیمت'))
 
     def __str__(self):
         return self.title

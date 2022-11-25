@@ -4,7 +4,7 @@ from .models import PaymentPlan, Payment
 
 @admin.register(PaymentPlan)
 class PaymentPlanAdmin(admin.ModelAdmin):
-    list_display = ['title', 'price']
+    list_display = ['title', 'price', 'months']
 
 
 @admin.register(Payment)
